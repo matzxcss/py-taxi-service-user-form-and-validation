@@ -4,8 +4,6 @@
   {% csrf_token %} {{ form|crispy }}
 
   <input type="submit" value="Submit" class="btn btn-primary" />
-  <a href="javascript:history.back()" class="btn btn-secondary link-to-page"
-    >Cancel</a
-  >
+  <a href="javascript:history.back()" class="btn btn-secondary link-to-page">Cancel</a>
 </form>
 {% endblock %}

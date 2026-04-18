@@ -17,10 +17,6 @@ class DriverCreationForm(UserCreationForm):
 
     def clean_license_number(self):
         license_number = self.cleaned_data.get("license_number")
-
-        if not license_number:
-            return license_number
-
         if (
             license_number[:3].isupper()
             and license_number[:3].isalpha()
@@ -42,10 +38,6 @@ class DriverLicenseUpdateForm(forms.ModelForm):
 
     def clean_license_number(self):
         license_number = self.cleaned_data.get("license_number")
-
-        if not license_number:
-            return license_number
-
         if (
             license_number[:3].isupper()
             and license_number[:3].isalpha()
