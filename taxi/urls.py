@@ -1,18 +1,22 @@
 from django.urls import path
 
 from .views import (
-    index,
-    CarListView,
-    CarDetailView,
     CarCreateView,
-    CarUpdateView,
     CarDeleteView,
-    DriverListView,
+    CarDetailView,
+    CarListView,
+    CarUpdateView,
+    DriverCreateView,
+    DriverDeleteView,
     DriverDetailView,
-    ManufacturerListView,
+    DriverLicenseUpdateView,
+    DriverListView,
     ManufacturerCreateView,
-    ManufacturerUpdateView,
     ManufacturerDeleteView,
+    ManufacturerListView,
+    ManufacturerUpdateView,
+    index,
+    toggle_assign_to_car,
 )
 
 urlpatterns = [
@@ -45,6 +49,22 @@ urlpatterns = [
     path("drivers/", DriverListView.as_view(), name="driver-list"),
     path(
         "drivers/<int:pk>/", DriverDetailView.as_view(), name="driver-detail"
+    ),
+    path("drivers/create/", DriverCreateView.as_view(), name="driver-create"),
+    path(
+        "drivers/<int:pk>/delete/",
+        DriverDeleteView.as_view(),
+        name="driver-delete",
+    ),
+    path(
+        "drivers/<int:pk>/update-license/",
+        DriverLicenseUpdateView.as_view(),
+        name="driver-update",
+    ),
+    path(
+        "drivers/<int:pk>/toggle-assign-to-car/",
+        toggle_assign_to_car,
+        name="toggle-assign-to-car",
     ),
 ]
 
