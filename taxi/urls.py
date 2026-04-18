@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.urls import path
 
 from .views import (
@@ -18,6 +19,8 @@ from .views import (
     index,
     toggle_assign_to_car,
 )
+
+user = get_user_model()
 
 urlpatterns = [
     path("", index, name="index"),

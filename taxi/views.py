@@ -6,14 +6,16 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CarForm, DriverCreationForm, DriverLicenseUpdateForm
-from .models import Car, Driver, Manufacturer
+from .models import Car, Manufacturer
+
+user = get_user_model()
 
 
 @login_required
 def index(request):
     """View function for the home page of the site."""
 
-    num_drivers = Driver.objects.count()
+    num_drivers = user.objects.count()
     num_cars = Car.objects.count()
     num_manufacturers = Manufacturer.objects.count()
 
@@ -82,30 +84,30 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
-    model = get_user_model()
+    model = user
     paginate_by = 5
 
 
 class DriverDetailView(LoginRequiredMixin, generic.DetailView):
-    model = get_user_model()
+    model = user
     queryset = (
         get_user_model().objects.all().prefetch_related("cars__manufacturer")
     )
 
 
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
-    model = get_user_model()
+    model = user
     form_class = DriverCreationForm
     success_url = reverse_lazy("taxi:driver-list")
 
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = get_user_model()
+    model = user
     success_url = reverse_lazy("taxi:driver-list")
 
 
 class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = get_user_model()
+    model = user
     form_class = DriverLicenseUpdateForm
     template_name = "taxi/driver_form.html"
 
@@ -117,7 +119,7 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 @login_required
 def toggle_assign_to_car(request, pk):
-    driver = get_user_model().objects.get(pk=request.user.pk)
+    driver = user.objects.get(pk=request.user.pk)
     car = Car.objects.get(pk=pk)
     if car in driver.cars.all():
         driver.cars.remove(car)

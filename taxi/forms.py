@@ -7,7 +7,8 @@ from taxi.models import Car
 
 class DriverCreationForm(UserCreationForm):
     class Meta:
-        model = get_user_model()
+        user = get_user_model()
+        model = user
         fields = UserCreationForm.Meta.fields + (
             "license_number",
             "first_name",
@@ -16,6 +17,10 @@ class DriverCreationForm(UserCreationForm):
 
     def clean_license_number(self):
         license_number = self.cleaned_data.get("license_number")
+
+        if not license_number:
+            return license_number
+
         if (
             license_number[:3].isupper()
             and license_number[:3].isalpha()
@@ -31,11 +36,16 @@ class DriverCreationForm(UserCreationForm):
 
 class DriverLicenseUpdateForm(forms.ModelForm):
     class Meta:
-        model = get_user_model()
+        user = get_user_model()
+        model = user
         fields = ("license_number",)
 
     def clean_license_number(self):
         license_number = self.cleaned_data.get("license_number")
+
+        if not license_number:
+            return license_number
+
         if (
             license_number[:3].isupper()
             and license_number[:3].isalpha()

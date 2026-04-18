@@ -1,12 +1,15 @@
 {% extends "base.html" %} {% block content %}
 <h1>
   {% if user in car.drivers.all %}
-  <a href="{% url 'taxi:toggle-car-assign' pk=car.id %}" class="btn btn-danger">
+  <a
+    href="{% url 'taxi:toggle-assign-to-car' pk=car.id %}"
+    class="btn btn-danger"
+  >
     Delete me from this car
   </a>
   {% else %}
   <a
-    href="{% url 'taxi:toggle-car-assign' pk=car.id %}"
+    href="{% url 'taxi:toggle-assign-to-car' pk=car.id %}"
     class="btn btn-success"
   >
     Assign me to this car
